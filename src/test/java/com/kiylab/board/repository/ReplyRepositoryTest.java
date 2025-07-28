@@ -1,7 +1,7 @@
 package com.kiylab.board.repository;
 
-import com.kiylab.board.entity.Board;
-import com.kiylab.board.entity.Reply;
+import com.kiylab.board.domain.entity.Board;
+import com.kiylab.board.domain.entity.Reply;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -48,5 +48,16 @@ public class ReplyRepositoryTest {
     log.info(reply);
     log.info(reply.getBoard());
     log.info(reply.getBoard().getWriter());
+  }
+
+
+  @Test
+  public void testfindByBoard_Bno() {
+    repository.findByBoard_BnoOrderByRno(2L).forEach(log::info);
+  }
+
+  @Test
+  public void testfindByBoard() {
+    repository.findByBoard(Board.builder().bno(2L).build()).forEach(log::info);
   }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout/index :: setContent(~{this::content})}">
   <th:block th:fragment="content">
-    <h1 class="my-3">Guestbook Resister Page</h1>
+    <h1 class="my-3">Board Resister Page</h1>
     <form th:action="@{/board/register}" method="post">
       <div class="form-group">
         <label for="title">title</label>

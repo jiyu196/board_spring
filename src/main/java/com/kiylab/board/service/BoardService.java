@@ -1,11 +1,11 @@
 package com.kiylab.board.service;
 
-import com.kiylab.board.dto.BoardDTO;
-import com.kiylab.board.dto.PageRequestDTO;
-import com.kiylab.board.dto.PageResponseDTO;
-import com.kiylab.board.entity.Board;
-import com.kiylab.board.entity.Member;
-import com.kiylab.board.projection.dto.BoardWithReplyCount;
+import com.kiylab.board.domain.dto.BoardDTO;
+import com.kiylab.board.domain.dto.PageRequestDTO;
+import com.kiylab.board.domain.dto.PageResponseDTO;
+import com.kiylab.board.domain.entity.Board;
+import com.kiylab.board.domain.entity.Member;
+import com.kiylab.board.domain.projection.dto.BoardWithReplyCount;
 
 public interface BoardService {
   Long register(BoardDTO boardDTO);
@@ -42,13 +42,14 @@ public interface BoardService {
   }
   default BoardDTO projectionToDTO(BoardWithReplyCount entity) {
     return BoardDTO.builder()
-            .bno(entity.getBoard().getBno())
-            .title(entity.getBoard().getTitle())
-            .content(entity.getBoard().getContent())
-            .regDate(entity.getBoard().getRegDate())
-            .modDate(entity.getBoard().getModDate())
-            .writerEmail(entity.getBoard().getWriter().getName())
-            .replyCount(entity.getReplyCount())
+            .bno(entity.board().getBno())
+            .title(entity.board().getTitle())
+            .content(entity.board().getContent())
+            .regDate(entity.board().getRegDate())
+            .modDate(entity.board().getModDate())
+            .writerEmail(entity.board().getWriter().getEmail())
+            .writerName(entity.board().getWriter().getName())
+            .replyCount(entity.replyCount())
             .build();
   }
 }

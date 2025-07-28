@@ -1,10 +1,8 @@
 package com.kiylab.board.repository;
 
-import com.kiylab.board.dto.BoardDTO;
-import com.kiylab.board.projection.dto.*;
-import com.kiylab.board.entity.Board;
-import com.kiylab.board.entity.Member;
-import com.kiylab.board.service.BoardService;
+import com.kiylab.board.domain.projection.dto.*;
+import com.kiylab.board.domain.entity.Board;
+import com.kiylab.board.domain.entity.Member;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -109,5 +105,19 @@ public class BoardRepositoryTest {
     page.stream().forEach(log::info);
   }
 
+  @Test
+  public void testSearch() {
+    repository.search();
+  }
+
+  @Test
+  public void testSearchPage() {
+    Page<BoardWithReplyCount> bwrc = repository.searchPage("tcw", "title", PageRequest.of(3, 5,
+            Sort.by(Sort.Direction.DESC, "bno").and(Sort.by(Sort.Direction.ASC, "title"))));
+
+    log.info(bwrc.getTotalPages());
+    log.info(bwrc.getTotalElements());
+    bwrc.getContent().forEach(log::info);
+  }
 
 }

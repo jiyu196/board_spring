@@ -1,8 +1,7 @@
 package com.kiylab.board.service;
 
-import com.kiylab.board.dto.BoardDTO;
-import com.kiylab.board.dto.PageRequestDTO;
-import com.kiylab.board.entity.Board;
+import com.kiylab.board.domain.dto.BoardDTO;
+import com.kiylab.board.domain.dto.PageRequestDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

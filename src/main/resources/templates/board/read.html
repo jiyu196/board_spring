@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout/index :: setContent(~{this::content})}">
   <th:block th:fragment="content">
-    <h1>Guestbook Read Page</h1>
+    <h1>Board Read Page</h1>
 
     <div class="form-group">
       <label for="bno">bno</label>
@@ -18,20 +18,107 @@
     </div>
     <div class="form-group">
       <label>Writer</label>
-      <input type="text" class="form-control" name="writer" placeholder="Writer" th:value="${dto.writer}" readonly="readonly">
+      <input type="text" class="form-control" name="writer" placeholder="Writer" th:value="${dto.writerName}" readonly="readonly">
     </div>
     <div class="form-group">
       <label>regDate</label>
-      <input type="text" class="form-control" name="regDate" placeholder="regDate" th:value="${dto.regDate}" readonly="readonly">
+      <input type="text" class="form-control" name="regDate" placeholder="regDate" th:value="${#temporals.format(dto.regDate, 'yyy/MM/dd')}" readonly="readonly">
     </div>
 
     <div class="form-group">
       <label>modDate</label>
-      <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${dto.modDate}" readonly="readonly">
+      <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${#temporals.format(dto.modDate, 'yyy/MM/dd')}" readonly="readonly">
     </div>
-    <a th:href="@{/board/modify(page = ${pageDto.page}, size = ${pageDto.size}, bno=${dto.bno}, type=${requestDto.type}, keyword=${requestDto.keyword})}" class="btn btn-primary mt-3">modify</a>
-    <a th:href="@{/board/list(page = ${pageDto.page}, size = ${pageDto.size}, type=${requestDto.type}, keyword=${requestDto.keyword})}" class="btn btn-primary mt-3">List</a>
+    <a th:href="@{/board/modify(page = ${requestDto.page}, size = ${requestDto.size}, bno = ${dto.bno}, type = ${requestDto.type}, keyword = ${requestDto.keyword})}" class="btn btn-primary mt-3">modify</a>
+    <a th:href="@{/board/list(page = ${requestDto.page}, size = ${requestDto.size}, type = ${requestDto.type}, keyword = ${requestDto.keyword})}" class="btn btn-primary mt-3">List</a>
 
   </th:block>
 </th:block>
+<script>
+  // 전역변수로  counter 0
+  // 10 ** 3  -> ** 이 제곱이라 1000
+  // 10의 0승은 1 이런
+
+  let counter = 0;
+  function callLocal(n, cb) {
+    const add = 10 ** n;  // 0을 호출하면 이됨
+    counter += add;
+    console.log(`[local] 10^${n} - ${add} -> counter : ${counter}`);
+    if(cb) cb();
+  }
+  function callAsync(n, cb) {
+    const add = 10 ** n;  // 0을 호출하면 이됨
+    const delay =Math.floor(Math.random() * 1000);  // 0~ 999 사이의 난수가 나옴.
+
+    setTimeout(() => {
+    counter += add;
+    console.log(`[async] 10^${n} - ${add} -> counter : ${counter}, delay: ${delay}ms`);
+    if(cb) cb();
+    }, delay);
+  }
+
+  // callback  => 추후에 호출되는. 람다도 콜백임. 파라미터로 전달되는 함수.
+  // 준비가됐을 때 호출될 이벤트.
+
+  callAsync(0, () => {
+    callAsync(1,() => {
+      callAsync(2,() => {
+        callAsync(3,() => {
+          callAsync(4,() => {
+            callLocal(5, () => {
+              callLocal(6, () => {
+                callLocal(7, () => {
+                  callLocal(8, () => {
+                    callLocal(9, () => {
+                      console.log("마지막")
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+    });
+  });
+  // callAsync(2);
+  // callAsync(3);
+  // callAsync(4);
+  // callLocal(5);
+  // callLocal(6);
+  // callLocal(7);
+  // callLocal(8);
+  // callLocal(9);
+  // 이제 이걸 순차처리하게 바꾸는. 5,6,7,8,9는 쉬운데 0,1,2,3,4,는..
+  //delay가 들어오는건 순번 보장이 되지 않는다는.
+
+  // $.ajax({
+  //   success: (date) => {
+  //     $.ajax({
+  //       success: (date) => {
+  //
+  //       }
+  //     })
+  //   }
+  // })
+
+  // $.ajax({
+  //   success: (data) => {},
+  //   error: (error) => {},
+  //   finally: (date) => {}
+  // })
+  // .done((data) => {
+  //
+  // })
+  // .fail(error => {
+  //
+  // })
+  // .always((data) => {
+  //
+  // })
+  // .done((data) => {
+  //
+  // })
+
+</script>
 </html>

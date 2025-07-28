@@ -1,7 +1,6 @@
-package com.kiylab.board.entity;
+package com.kiylab.board.domain.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import lombok.*;
 

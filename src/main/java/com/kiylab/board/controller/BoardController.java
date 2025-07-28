@@ -1,8 +1,7 @@
 package com.kiylab.board.controller;
 
-import com.kiylab.board.dto.BoardDTO;
-import com.kiylab.board.dto.PageRequestDTO;
-import com.kiylab.board.entity.Board;
+import com.kiylab.board.domain.dto.BoardDTO;
+import com.kiylab.board.domain.dto.PageRequestDTO;
 import com.kiylab.board.service.BoardService;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -40,10 +39,40 @@ public class BoardController {
     return "redirect:list";
   }
 
+  @GetMapping("read")
+  public void read(@ModelAttribute("requestDto") PageRequestDTO dto, Model model, Long bno) {
+    log.info(bno);
+    log.info(service.get(bno));
+    model.addAttribute("dto", service.get(bno));
+    log.info(model.toString());
+//    return "read";
+  }
 
+  @GetMapping("modify")
+  public void modify(@ModelAttribute("requestDto") PageRequestDTO dto, Model model, Long bno) {
+    model.addAttribute("dto", service.get(bno));
+  }
 
+  @PostMapping("modify")
+  public String modify(@ModelAttribute("requestDto") PageRequestDTO dto, BoardDTO boardDTO, RedirectAttributes rttr) {
+    service.modify(boardDTO);
+    rttr.addAttribute("bno", boardDTO.getBno());
+    rttr.addAttribute("page", dto.getPage());
+    rttr.addAttribute("size", dto.getSize());
+    rttr.addAttribute("type", dto.getType());
+    rttr.addAttribute("keyword", dto.getKeyword());
+    return  "redirect:read";
+  }
 
+  @PostMapping("remove")
+  public  String remove(PageRequestDTO dto, Long bno, RedirectAttributes rttr) {
+    service.remove(bno);
 
+    rttr.addAttribute("msg", bno);
+    rttr.addAttribute("page", 1);
+    rttr.addAttribute("size", dto.getSize());
+    return "redirect:list";
+  }
 
 
 }

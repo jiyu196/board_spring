@@ -1,4 +1,4 @@
-package com.kiylab.board.dto;
+package com.kiylab.board.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +29,7 @@ public class PageRequestDTO {
   }
 
   public String getQs() {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/guestbook");
+    UriComponentsBuilder builder = UriComponentsBuilder.fromPath("");
     builder.queryParam("size", size);
     builder.queryParam("type", type);
     builder.queryParam("keyword", keyword);
@@ -37,7 +37,7 @@ public class PageRequestDTO {
   }
 
   public String getQs2() {
-    UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/guestbook");
+    UriComponentsBuilder builder = UriComponentsBuilder.fromPath("");
     builder.queryParam("size", size);
     builder.queryParam("page", page);
     builder.queryParam("type", type);

@@ -1,4 +1,4 @@
-package com.kiylab.board.dto;
+package com.kiylab.board.domain.dto;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;

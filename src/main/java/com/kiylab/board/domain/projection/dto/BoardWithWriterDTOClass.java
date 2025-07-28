@@ -1,7 +1,7 @@
-package com.kiylab.board.projection.dto;
+package com.kiylab.board.domain.projection.dto;
 
-import com.kiylab.board.entity.Board;
-import com.kiylab.board.entity.Member;
+import com.kiylab.board.domain.entity.Board;
+import com.kiylab.board.domain.entity.Member;
 import lombok.Getter;
 
 @Getter

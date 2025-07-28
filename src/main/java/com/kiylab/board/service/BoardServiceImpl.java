@@ -1,14 +1,13 @@
 package com.kiylab.board.service;
 
-import com.kiylab.board.dto.BoardDTO;
-import com.kiylab.board.dto.PageRequestDTO;
-import com.kiylab.board.dto.PageResponseDTO;
-import com.kiylab.board.entity.Board;
-import com.kiylab.board.projection.dto.BoardWithReplyCount;
+import com.kiylab.board.domain.dto.BoardDTO;
+import com.kiylab.board.domain.dto.PageRequestDTO;
+import com.kiylab.board.domain.dto.PageResponseDTO;
+import com.kiylab.board.domain.entity.Board;
+import com.kiylab.board.domain.projection.dto.BoardWithReplyCount;
 import com.kiylab.board.repository.BoardRepository;
 import com.kiylab.board.repository.ReplyRepository;
 import lombok.Data;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,7 @@ public class BoardServiceImpl implements BoardService{
   @Override
   public PageResponseDTO<BoardDTO, BoardWithReplyCount> getList(PageRequestDTO pageRequestDTO) {
     return new PageResponseDTO<>(
-            boardRepository.getBoardWithReplyCount2(pageRequestDTO.getPageable(Sort.by(Sort.Direction.DESC,"bno" )))
+            boardRepository.searchPage(pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable(Sort.by(Sort.Direction.DESC, "bno")))
             , this::projectionToDTO);
   }
 

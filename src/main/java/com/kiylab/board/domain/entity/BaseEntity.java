@@ -1,8 +1,9 @@
-package com.kiylab.board.entity;
+package com.kiylab.board.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(exclude = "modDate")
 public class BaseEntity {
   @CreatedDate
   @Column(updatable = false, name = "regdate")

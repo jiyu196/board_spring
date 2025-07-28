@@ -1,4 +1,4 @@
-package com.kiylab.board.entity;
+package com.kiylab.board.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

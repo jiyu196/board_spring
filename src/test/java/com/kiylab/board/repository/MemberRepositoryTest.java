@@ -1,6 +1,6 @@
 package com.kiylab.board.repository;
 
-import com.kiylab.board.entity.Member;
+import com.kiylab.board.domain.entity.Member;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
