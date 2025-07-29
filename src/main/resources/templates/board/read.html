@@ -106,7 +106,6 @@
                    <h5 class="card-subtitle mb-2 text-muted">${r.replyer}</h5>
                    <p class="card-text">${dayjs(r.regDate).fromNow()}</p>
                    <button type="button" class="btn btn-warning replyModify" >Modify</button>
-                   <button type="button" class="btn btn-danger replyRemove" >Remove</button>
                  </div>
                 </li>
               `;
@@ -171,16 +170,17 @@
       //   const rno = {rno};
         const rno = document.querySelector("input[name='rno']").value;
         console.log(rno);
+
         // e.target.closest(".modal").querySelectorAll("input[type=text]").forEach(i => rno[i.name] = i.value);
         // console.log(rno)
 
-        fetch(`/replies/${rno}`, {
+        fetch(`../replies/${rno}`, {
           method: "DELETE",
 
         })
             .then(resp => resp.json())
             .then(data => {
-              alert("댓글이 삭제되었습니다")
+              alert(data.rno + "댓글이 삭제되었습니다")
               myModal.hide();
               loadJSONData(e);
             });
@@ -192,15 +192,15 @@
     document.querySelector(".replyModify").addEventListener("click", e => {
       console.log("수정버튼클릭")
       // 2
+      const reply = {bno}
       const rno = document.querySelector("input[name='rno']").value;
       console.log("rno:", rno)
-      const reply = {bno, rno}
 
       console.log(reply);
       e.target.closest(".modal").querySelectorAll("input[type=text]").forEach(i => reply[i.name] = i.value);
       console.log(reply)
 
-      fetch(`/replies/${rno}`, {
+      fetch(`../replies/${rno}`, {
         method: "PUT",
         headers : {
           "Content-Type" : "application/json"
