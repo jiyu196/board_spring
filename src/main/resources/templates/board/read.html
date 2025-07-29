@@ -29,7 +29,7 @@
       <label>modDate</label>
       <input type="text" class="form-control" name="modDate" placeholder="modDate" th:value="${#temporals.format(dto.modDate, 'yyy/MM/dd')}" readonly="readonly">
     </div>
-    <a th:href="@{/board/modify(page = ${requestDto.page}, size = ${requestDto.size}, bno = ${dto.bno}, type = ${requestDto.type}, keyword = ${requestDto.keyword})}" class="btn btn-primary mt-3">modify</a>
+    <a th:href="@{/board/modify(page = ${requestDto.page}, size = ${requestDto.size}, bno = ${dto.bno}, type = ${requestDto.type}, keyword = ${requestDto.keyword})}" class="btn btn-primary mt-3">Modify</a>
     <a th:href="@{/board/list(page = ${requestDto.page}, size = ${requestDto.size}, type = ${requestDto.type}, keyword = ${requestDto.keyword})}" class="btn btn-primary mt-3">List</a>
 
     <div class="mt-4">
@@ -125,6 +125,18 @@
       myModal.show()
     });
 
+    document.querySelector(".replyList").addEventListener("click", () => {
+      const myModal = new bootstrap.Modal(document.querySelector('.modal'))
+
+      document.querySelectorAll('.card-body input[type=text]').forEach(i => i.value = '');
+      [...document.querySelectorAll(".modal-footer button")]
+              .filter(b => { b.classList.add('d-none') ; return b.matches('.replyModify, .replyRemove, .replyClose')})
+              .forEach(b => b.classList.remove('d-none'));
+      myModal.show()
+    });
+
+
+
     //save
     // 1
     document.querySelector(".replySave").addEventListener("click", e => {
@@ -148,47 +160,61 @@
         myModal.hide();
         loadJSONData(e);
       });
+    });
 
-      // 삭제,수정 버튼
-    //   document.querySelector(".replyCount").addEventListener("click",() => loadJSONData());
-    //
-    //   document.querySelector(".addReply").addEventListener("click", () => {
-    //     const myModal = new bootstrap.Modal(document.querySelector('.modal'))
-    //
-    //   document.querySelectorAll('.modal input[type=text]').forEach(i => i.value = '');
-    //   [...document.querySelectorAll(".modal-footer button")]
-    //       .filter(b => { b.classList.add('d-none') ; return b.matches('.replyModify, .replyClose, .replyRemove')})  //close, save만 남기겠다
-    //       .forEach(b => b.classList.remove('d-none'));
-    //   myModal.show()
-    // });
+    //remove
       // 1
       document.querySelector(".replyRemove").addEventListener("click", e => {
-        console.log("삭제클릭")
-      //   // 2
-        const reply = {rno}
-        console.log(reply);
-        e.target.closest(".modal").querySelectorAll("input[type=text]").forEach(i => reply[i.name] = i.value);
-        console.log(reply)
+        console.log("삭제버튼 클릭")
 
-        fetch("/replies", {
+      // 2
+      //   const rno = {rno};
+        const rno = document.querySelector("input[name='rno']").value;
+        console.log(rno);
+        // e.target.closest(".modal").querySelectorAll("input[type=text]").forEach(i => rno[i.name] = i.value);
+        // console.log(rno)
+
+        fetch(`/replies/${rno}`, {
           method: "DELETE",
-          headers : {
-            "Content-Type" : "application/json"
-          },
-          body: JSON.stringify(reply)
+
         })
             .then(resp => resp.json())
             .then(data => {
-              alert(data + "번 댓글이 삭제되었습니다")
+              alert("댓글이 삭제되었습니다")
               myModal.hide();
               loadJSONData(e);
             });
 
-      //
+        })
+
+    //modify
+    // 1
+    document.querySelector(".replyModify").addEventListener("click", e => {
+      console.log("수정버튼클릭")
+      // 2
+      const rno = document.querySelector("input[name='rno']").value;
+      console.log("rno:", rno)
+      const reply = {bno, rno}
+
+      console.log(reply);
+      e.target.closest(".modal").querySelectorAll("input[type=text]").forEach(i => reply[i.name] = i.value);
+      console.log(reply)
+
+      fetch(`/replies/${rno}`, {
+        method: "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(reply)
       })
-
-
+              .then(resp => resp.json())
+              .then(data => {
+                alert("댓글이 수정되었습니다")
+                myModal.hide();
+                loadJSONData(e);
+              });
     });
+
   });
 </script>
 </html>

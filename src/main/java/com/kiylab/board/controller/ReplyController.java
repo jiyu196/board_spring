@@ -28,10 +28,18 @@ public class ReplyController {
     return ResponseEntity.ok(replyService.register(dto));
   }
 
-  @DeleteMapping("board/{rno}")
+  @DeleteMapping("/{rno}")
   public ResponseEntity<?> deleteReply(@PathVariable("rno") Long rno) {
     replyService.remove(rno);
-    return ResponseEntity.ok("sdsd");
+    return ResponseEntity.ok("삭제완료");
+  }
+
+  @PutMapping("/{rno}")
+  public ResponseEntity<?> modifyReply(@PathVariable("rno") Long rno, @RequestBody ReplyDTO dto) {
+    log.info(dto);
+    dto.setRno(rno);
+    replyService.modify(dto);
+    return ResponseEntity.ok("수정완료");
   }
 
 }
