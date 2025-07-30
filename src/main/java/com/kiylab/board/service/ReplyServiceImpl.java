@@ -26,7 +26,7 @@ public class ReplyServiceImpl implements ReplyService{
 
   @Override
   public void modify(ReplyDTO dto) {
-    replyRepository.save(replyMapper.toEntity(dto));
+    replyRepository.saveAndFlush(replyMapper.toEntity(dto));
   }
 
 
