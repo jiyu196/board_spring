@@ -39,7 +39,7 @@ public class BoardRestController {
   }
 
   @PostMapping("modify")
-  public ResponseEntity<?> modify(BoardDTO boardDTO) {
+  public ResponseEntity<?> modify(@RequestBody BoardDTO boardDTO) {
 //    rttr.addAttribute("bno", boardDTO.getBno());
 //    rttr.addAttribute("page", dto.getPage());
 //    rttr.addAttribute("size", dto.getSize());
@@ -50,7 +50,7 @@ public class BoardRestController {
   }
 
   @PostMapping("remove")
-  public  ResponseEntity<?> remove(Long bno) {
+  public  ResponseEntity<?> remove(@RequestBody Long bno) {
 
 //    rttr.addAttribute("msg", bno);
 //    rttr.addAttribute("page", 1);
