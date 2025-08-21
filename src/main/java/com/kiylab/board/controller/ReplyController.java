@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("replies")
 //@Data  // getter, setter, requires~
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReplyController {
   private final ReplyService replyService;
 
